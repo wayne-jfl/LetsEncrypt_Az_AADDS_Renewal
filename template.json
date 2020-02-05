@@ -43,47 +43,6 @@
                 "Disabled"
             ],
             "defaultValue": "Enabled"
-        },
-        "dayOfWeek": {
-            "type":"string",
-            "allowedValues": [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday"
-            ]
-        },
-        "startTime": {
-            "type": "string",
-            "allowedValues": [
-                "00:00",
-                "01:00",
-                "02:00",
-                "03:00",
-                "04:00",
-                "05:00",
-                "06:00",
-                "07:00",
-                "08:00",
-                "09:00",
-                "10:00",
-                "11:00",
-                "12:00",
-                "13:00",
-                "14:00",
-                "15:00",
-                "16:00",
-                "17:00",
-                "18:00",
-                "19:00",
-                "20:00",
-                "21:00",
-                "22:00",
-                "23:00"
-            ]
         }
     },
     "resources": [
@@ -234,22 +193,6 @@
                     "apiVersion":"2015-10-31",
                     "properties":{
                         "value": "[concat('\"', parameters('externalAccess'), '\"')]"
-                    },
-                    "dependsOn": [
-                        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
-                    ],
-                    "location": "[parameters('location')]"
-                },
-                {
-                    "type":"schedules",
-                    "name":"weekly",
-                    "apiVersion": "2015-10-31",
-                    "properties":{
-                        "frequency":"Week",
-                        "description": "Weekly",
-                        "timeZone": "America/New_York",
-                        "interval": "[array(parameters('dayofweek'))]",
-                        "startTime": "[concat('2020-01-01T', parameters('startTime'), ':00-05:00')]"
                     },
                     "dependsOn": [
                         "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
