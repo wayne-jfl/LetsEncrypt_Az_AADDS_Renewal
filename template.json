@@ -42,6 +42,26 @@
                             "version": "1.0.0.0"
                         }
                     }
+                },
+                {
+                    "type": "runbooks",
+                    "apiVersion":"2015-10-31",
+                    "name": "Install-LE-AADDS",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+                    ],
+                    "tags": {},
+                    "properties": {
+                        "runbookType":"PowerShell",
+                        "logProgress":false,
+                        "logVerbose":false,
+                        "description": "Use to update LDAPS certificate with LetsEncrypt certificate automatically.",
+                        "publishContentLink": {
+                            "uri": "https://raw.githubusercontent.com/zchoate/LetsEncrypt_Az_AADDS_Renewal/master/Install-LE-AADDS.ps1",
+                            "version": "1.0.0.0"
+                        }
+                    }  
                 }
             ]
         }
