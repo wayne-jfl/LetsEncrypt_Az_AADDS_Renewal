@@ -30,8 +30,10 @@
     Azure - set nothing here
     Cloudflare - Cloudflare API secret here
     GoDaddy - API secret here
+.PARAMETER externalAccess
+    Set to Enabled or Disabled to enable secure LDAP access over the internet
 .NOTES
-    Version:         0.1
+    Version:         0.2
     Author:          Zachary Choate
     Creation Date:   02/05/2020
     URL:             https://raw.githubusercontent.com/zchoate/LetsEncrypt_Az_AADDS_Renewal/master/Install-LE-AADDS.ps1
@@ -42,7 +44,8 @@ param(
     [string] $contact,
     [string] $dnsProvider,
     [string] $dnsApiId,
-    [string] $dnsApiSecret
+    [string] $dnsApiSecret,
+    [string] $externalAccess
 )
 
 # Pull from Automation variables if not passed through
@@ -52,6 +55,7 @@ If(-not $contact) {$contact = Get-AutomationVariable -Name 'contact'}
 If(-not $dnsProvider) {$dnsProvider = Get-AutomationVariable -Name 'dnsProvider'}
 If(-not $dnsApiId) {$dnsApiId = Get-AutomationVariable -Name 'dnsApiId'}
 If(-not $dnsApiSecret) {$dnsApiSecret = Get-AutomationVariable -Name 'dnsApiSecret'}
+If(-not $externalAccess) {$externalAccess = Get-AutomationVariable -Name 'externalAccess'}
 
 $paServer = $LEserver
 $wildcardDomain = "*.$domain"
@@ -137,7 +141,7 @@ $AADDSsettings = @(@{
         "ldapsSettings" =
             @{
             "ldaps" = "Enabled"
-            "externalAccess" = "Enabled"
+            "externalAccess" = $externalAccess
             "certificateThumbprint" = $certificate.Thumbprint
             "certificateNotAfter" = $certificate.NotAfter
             "pfxCertificate" = $pfxCertificate
