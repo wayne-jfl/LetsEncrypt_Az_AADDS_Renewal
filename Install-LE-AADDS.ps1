@@ -60,11 +60,11 @@ If(-not $externalAccess) {$externalAccess = Get-AutomationVariable -Name 'extern
 $paServer = $LEserver
 $wildcardDomain = "*.$domain"
 
-If($dnsProvider = "GoDaddy") {
+If($dnsProvider -eq "GoDaddy") {
     $dnsArguments = @{GDKey=$dnsApiId;GDSecret=$dnsApiSecret}
-} elseif ($dnsProvider = "Cloudflare") {
+} elseif ($dnsProvider -eq "Cloudflare") {
     $dnsArguments = @{CFAuthEmail=$dnsApiId;CFAuthKey=$dnsApiSecret}
-} elseif ($dnsProvider = "Azure") {
+} elseif ($dnsProvider -eq "Azure") {
     $dnsArguments = @{AZSubscriptionId=$context.Subscription.Id;AZAccessToken=$accessToken}
 } else { Write-Output "There isn't a supported DNS provider selected. Please choose from Azure, Cloudflare, or GoDaddy. If you need another configured, please modify the script appropriately."}
 
@@ -75,9 +75,15 @@ If(!(Get-Module -ListAvailable -Name "Posh-ACME")) {
 } 
 
 # Check for Az vs AzureRM modules
-If(!(Get-Module -ListAvailable -Name "Az")) {
+If(Get-Module -ListAvailable -Name "Az") {
+    $azModuleInstalled = $true
+    Import-Module Az.Accounts
+    Import-Module Az.Resources
+} else {
     Write-Output "Az modules are not installed, you may want to update this but in the meantime, we'll defer to AzureRM."
     $azModuleInstalled = $false
+    Import-Module AzureRM.Profile
+    Import-Module AzureRM.Resources
 }
 
 # Don't inherit Azure Context in runbook
