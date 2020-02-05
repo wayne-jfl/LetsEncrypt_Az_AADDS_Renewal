@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "2.0.0.0",
     "parameters": {
         "accountName": {
@@ -7,6 +7,83 @@
         },
         "location": {
             "type": "string"
+        },
+        "LEserver": {
+            "type": "string",
+            "allowedValues": [
+                "LE_PROD",
+                "LE_STAGE"
+            ],
+            "defaultValue": "LE_PROD"
+        },
+        "domain": {
+            "type": "string"
+        },
+        "contact": {
+            "type": "string"
+        },
+        "dnsProvider": {
+            "type": "string",
+            "allowedValues": [
+                "Azure",
+                "Cloudflare",
+                "GoDaddy"
+            ]
+        },
+        "dnsApiId": {
+            "type": "securestring"
+        },
+        "dnsApiSecret": {
+            "type": "securestring"
+        },
+        "externalAccess": {
+            "type": "string",
+            "allowedValues": [
+                "Enabled",
+                "Disabled"
+            ],
+            "defaultValue": "Enabled"
+        },
+        "dayOfWeek": {
+            "type":"string",
+            "allowedValues": [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ]
+        },
+        "startTime": {
+            "type": "string",
+            "allowedValues": [
+                "00:00",
+                "01:00",
+                "02:00",
+                "03:00",
+                "04:00",
+                "05:00",
+                "06:00",
+                "07:00",
+                "08:00",
+                "09:00",
+                "10:00",
+                "11:00",
+                "12:00",
+                "13:00",
+                "14:00",
+                "15:00",
+                "16:00",
+                "17:00",
+                "18:00",
+                "19:00",
+                "20:00",
+                "21:00",
+                "22:00",
+                "23:00"
+            ]
         }
     },
     "resources": [
@@ -62,6 +139,122 @@
                             "version": "1.0.0.0"
                         }
                     }  
+                },
+                {
+                    "type":"modules",
+                    "apiVersion":"2015-10-31",
+                    "name": "Posh-ACME",
+                    "properties":{
+                        "contentLink":{
+                            "uri": "https://psg-prod-eastus.azureedge.net/packages/posh-acme.3.12.0.nupkg"
+                        }
+                    },
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+                    ]
+                },
+                {
+                    "type":"variables",
+                    "name": "LEserver",
+                    "apiVersion":"2015-10-31",
+                    "properties":{
+                        "value": "[concat('\"', parameters('LEserver'), '\"')]"
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+                    ],
+                    "location": "[parameters('location')]"
+                },
+                {
+                    "type":"variables",
+                    "name": "domain",
+                    "apiVersion":"2015-10-31",
+                    "properties":{
+                        "value": "[concat('\"', parameters('domain'), '\"')]"
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+                    ],
+                    "location": "[parameters('location')]"
+                },
+                {
+                    "type":"variables",
+                    "name": "contact",
+                    "apiVersion":"2015-10-31",
+                    "properties":{
+                        "value": "[concat('\"', parameters('contact'), '\"')]"
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+                    ],
+                    "location": "[parameters('location')]"
+                },
+                {
+                    "type":"variables",
+                    "name": "dnsProvider",
+                    "apiVersion":"2015-10-31",
+                    "properties":{
+                        "value": "[concat('\"', parameters('dnsProvider'), '\"')]"
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+                    ],
+                    "location": "[parameters('location')]"
+                },
+                {
+                    "type":"variables",
+                    "name": "dnsApiId",
+                    "apiVersion":"2015-10-31",
+                    "properties":{
+                        "value": "[concat('\"', parameters('dnsApiId'), '\"')]",
+                        "isEncrypted":true
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+                    ],
+                    "location": "[parameters('location')]"
+                },
+                {
+                    "type":"variables",
+                    "name": "dnsApiSecret",
+                    "apiVersion":"2015-10-31",
+                    "properties":{
+                        "value": "[concat('\"', parameters('dnsApiSecret'), '\"')]",
+                        "isEncrypted":true
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+                    ],
+                    "location": "[parameters('location')]"
+                },
+                {
+                    "type":"variables",
+                    "name": "externalAccess",
+                    "apiVersion":"2015-10-31",
+                    "properties":{
+                        "value": "[concat('\"', parameters('externalAccess'), '\"')]"
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+                    ],
+                    "location": "[parameters('location')]"
+                },
+                {
+                    "type":"schedules",
+                    "name":"weekly",
+                    "apiVersion": "2015-10-31",
+                    "properties":{
+                        "frequency":"Week",
+                        "description": "Weekly",
+                        "timeZone": "America/New_York",
+                        "interval": "[array(parameters('dayofweek'))]",
+                        "startTime": "[concat('2020-01-01T', parameters('startTime'), ':00-05:00')]"
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+                    ],
+                    "location": "[parameters('location')]"
                 }
             ]
         }
