@@ -75,7 +75,7 @@ If(!(Get-Module -ListAvailable -Name "Posh-ACME")) {
 } 
 
 # Check for Az vs AzureRM modules
-If(Get-Module -ListAvailable -Name "Az") {
+If(Get-Module -ListAvailable -Name "Az.Accounts") {
     $azModuleInstalled = $true
     Import-Module Az.Accounts
     Import-Module Az.Resources
