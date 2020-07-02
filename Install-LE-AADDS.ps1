@@ -36,7 +36,7 @@
     Version:         0.2
     Author:          Zachary Choate
     Creation Date:   02/05/2020
-    URL:             https://raw.githubusercontent.com/zchoate/LetsEncrypt_Az_AADDS_Renewal/master/Install-LE-AADDS.ps1
+    URL:             https://raw.githubusercontent.com/zchoate/LetsEncrypt_Az_AADDS_Renewal/main/Install-LE-AADDS.ps1
 #>
 param(
     [string] $LEserver,
