@@ -94,7 +94,7 @@
                         "logVerbose":false,
                         "description": "Use to update LDAPS certificate with LetsEncrypt certificate automatically.",
                         "publishContentLink": {
-                            "uri": "https://raw.githubusercontent.com/zchoate/LetsEncrypt_Az_AADDS_Renewal/master/Install-LE-AADDS.ps1",
+                            "uri": "https://raw.githubusercontent.com/zchoate/LetsEncrypt_Az_AADDS_Renewal/main/Install-LE-AADDS.ps1",
                             "version": "1.0.0.0"
                         }
                     }  
