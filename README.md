@@ -1,4 +1,4 @@
-[![Deploy to Azure](https://azurecomcdn.azureedge.net/mediahandler/acomblog/media/Default/blog/deploybutton.png)](https://azuredeploy.net/)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fzchoate%2FLetsEncrypt_Az_AADDS_Renewal%2Fmain%2Ftemplate.json)
 
 # LetsEncrypt_Az_AADDS_Renewal
 Use to update LDAPS certificate with LetsEncrypt certificate automatically.
