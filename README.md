@@ -1,3 +1,5 @@
+[![Deploy to Azure](https://azurecomcdn.azureedge.net/mediahandler/acomblog/media/Default/blog/deploybutton.png)](https://azuredeploy.net/)
+
 # LetsEncrypt_Az_AADDS_Renewal
 Use to update LDAPS certificate with LetsEncrypt certificate automatically.
 
@@ -7,6 +9,7 @@ Use to update LDAPS certificate with LetsEncrypt certificate automatically.
 - This should be run on a bi-weekly or monthly basis and will enable LDAPS and external access for LDAPS.
 - This script requires the Posh-ACME module. Be sure to install the module.
 - This script is currently designed to be run as an Azure Automation Runbook.
+- You will need to make the RunAs account a global/tenant administrator.
 ### PARAMETER LEserver
 - Set this to `LE_STAGE` for testing
 - Set this to `LE_PROD` for production
