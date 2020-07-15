@@ -165,7 +165,7 @@ If($azModuleInstalled) {
 }
 $cache = $context.TokenCache
 $cacheItem = $cache.ReadItems()
-$accessToken=($cacheItem | Where-Object { $_.Resource -eq “https://management.core.windows.net/" })[0].AccessToken
+$accessToken=($cacheItem | Where-Object { $_.Resource -eq "https://management.core.windows.net/" })[0].AccessToken
 
 # Initiate REST PATCH with new certificate information
 $url = "https://management.azure.com" + $aaddsResource.ResourceId + "?api-version=2017-06-01"
